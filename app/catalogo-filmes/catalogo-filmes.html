@@ -1,0 +1,55 @@
+<div class="catalogo-container">
+  <h1>Catálogo de Filmes</h1>
+  <div class="adicionar-secao">
+    <input 
+      type="text" 
+      [(ngModel)]="novoFilme" 
+      placeholder="Digite o nome de um novo filme..." 
+    />
+    <button 
+      (click)="adicionarFilme()" 
+      [disabled]="!novoFilme.trim()">
+      Adicionar
+    </button>
+  </div>
+
+  <div class="conteudo-principal">
+    <div class="lista-filmes">
+      <h3>Lista de Filmes</h3>
+      <ul>
+        @for (filme of filmes; track filme) {
+          <li 
+            (click)="selecionarFilme(filme)"
+            [class.selecionado]="filme === filmeSelecionado">
+            {{ filme }}
+          </li>
+        }
+      </ul>
+    </div>
+    <div class="detalhes-filme">
+      <h3>Detalhes do Filme Selecionado</h3>
+
+      @if (filmeSelecionado) {
+        <div class="card-detalhe" [class.favorito]="isFavorito">
+          <h2>{{ filmeSelecionado }}</h2>
+          
+          <p><strong>Visualizações:</strong> {{ visualizacoes }}</p>
+
+          <div class="botoes-acao">
+            <button (click)="alternarFavorito()">
+              {{ isFavorito ? 'Remover dos favoritos' : 'Adicionar aos favoritos' }}
+            </button>
+
+            <button (click)="incrementarVisualizacoes()">Aumentar Visualizações</button>
+          </div>
+
+          @if (isFavorito) {
+            <span class="badge-favorito">⭐ Favorito</span>
+          }
+        </div>
+      } @else {
+        <p class="mensagem-vazia">Nenhum filme foi selecionado.</p>
+      }
+    </div>
+  </div>
+</div>
